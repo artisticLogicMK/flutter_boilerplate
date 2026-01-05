@@ -1,0 +1,10 @@
+{
+  "@@locale": "es",
+  "appTitle": "Segundo Cerebro",
+  "settings": "Configuración",
+  "theme": "Tema",
+  "language": "Idioma",
+  "system": "Sistema",
+  "light": "Claro",
+  "dark": "Oscuro"
+}
