@@ -1,3 +1,3 @@
-# secondbrain
+# World-Class Flutter Boilerplate Here
 
-A new Flutter project.
+Theme, Locale, Persistent Storages (SQLite/Hive), State Management (Riverpod), Bespoke Achitecture, Security... All Set Up! Now Let the Launches Begin!
