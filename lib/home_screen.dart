@@ -1,146 +1,85 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:secondbrain/components/material_button.dart';
-import 'package:secondbrain/data/appconfig/appconfig_provider.dart';
-import 'package:secondbrain/data/database/app_database.dart';
-import 'package:secondbrain/data/providers/reminders_provider.dart';
-import 'package:secondbrain/l10n/app_localizations.dart';
-import 'package:secondbrain/services/permission_service.dart';
+import 'package:secondbrain/screens/reminder_screen.dart';
 import 'package:secondbrain/sliver.dart';
+import 'package:secondbrain/theme_playground.dart';
+import 'package:secondbrain/utils/PageTransitionSwitcher.dart';
 import 'theme/theme_extensions.dart';
-import 'theme_playground.dart';
 
-class HomeScreen extends ConsumerWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final reminders = ref.watch(remindersProvider);
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
 
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  int selectedIndex = 0;
+  bool _isExpanded = false;
 
-    final l10n = AppLocalizations.of(context)!;
+  @override
+  Widget build(BuildContext context) {
 
-    final permissionService =
-    ref.read(permissionServiceProvider);
+    List screens = [
+      ReminderScreen(key: ValueKey('ReminderScreen')),
+      ThemePreviewScreen(key: ValueKey('ThemePreviewScreen')),
+      Sliver(key: ValueKey('Sliver'))
+    ];
+
+    // Determine if we are on a large screen
+    bool isLargeScreen = MediaQuery.of(context).size.width > 600;
 
     return Scaffold(
-      backgroundColor: context.neutrals.neutral200,
+      backgroundColor: context.neutrals.neutral100,
+      // Bottom Bar only shows on small screens
+      bottomNavigationBar: isLargeScreen 
+        ? null 
+      : BottomNavigationBar(
+        currentIndex: selectedIndex,
+        onTap: (int index) => setState(() => selectedIndex = index),
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Reminder'),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Settings'),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
+        ],
+      ),
+
       body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                ElevatedButton(
-                  onPressed: () async {
-                    ref
-                        .read(remindersProvider.notifier)
-                        .addReminder(title: "Drink water", type: "daily");
-                      final granted = await permissionService.requestLocation();
-                  },
-                  child: Text('Add Reminder'),
+        child: Row(
+          children: [
+            // Navigation Rail only shows on large screens
+            if (isLargeScreen)
+              NavigationRail(
+                minExtendedWidth: 150,
+                selectedIndex: selectedIndex,
+                onDestinationSelected: (int index) => setState(() => selectedIndex = index),
+                // labelType: NavigationRailLabelType.all,
+                extended: _isExpanded,
+                leading: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 24.0),
+                  child: FlutterLogo(),
                 ),
-
-
-
-                remindersWidget(reminders),
-
-
-
-                SizedBox(height: 100),
-
-
-
-                Consumer(
-                  builder: (context, ref, _) {
-                    final notifier = ref.read(appConfigProvider.notifier);
-
-                    return Column(
-                      children: [
-                        Text(
-                          'Theming',
-                          style: TextStyle(
-                            color: context.neutrals.neutral600,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        ListTile(
-                          title: Text("${l10n.system}: ${isDark ? 'Dark' : 'Light'}"),
-                          onTap: () => notifier.setThemeMode(ThemeMode.system),
-                        ),
-                        ListTile(
-                          title: Text(l10n.light),
-                          onTap: () => notifier.setThemeMode(ThemeMode.light),
-                        ),
-                        ListTile(
-                          title: Text(l10n.dark),
-                          onTap: () => notifier.setThemeMode(ThemeMode.dark),
-                        ),
-
-
-                        // Locale
-                        Text('Locale', style: TextStyle(
-                            color: context.neutrals.neutral600,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        ListTile(
-                          title: Text(l10n.system),
-                          onTap: () => ref
-                              .read(appConfigProvider.notifier)
-                              .setLocale(null),
-                        ),
-
-                        ListTile(
-                          title: const Text("English"),
-                          onTap: () => ref
-                              .read(appConfigProvider.notifier)
-                              .setLocale(const Locale('en')),
-                        ),
-
-                        ListTile(
-                          title: const Text("Español"),
-                          onTap: () => ref
-                              .read(appConfigProvider.notifier)
-                              .setLocale(const Locale('es')),
-                        ),
-                      ],
-                    );
-                  },
+                trailing: IconButton(
+                  icon: Icon(_isExpanded ? Icons.menu_open : Icons.menu),
+                  onPressed: () => setState(() => _isExpanded = !_isExpanded),
+                  padding: EdgeInsets.only(top: 30),
                 ),
-
-
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => const Sliver()
-                      ),
-                    );
-                  },
-                  child: const Text('Theme Preview'),
-                ),
-
-                AppButton(label: "Done", onPressed: () {})
-              ],
+                destinations: const [
+                  NavigationRailDestination(icon: Icon(Icons.home), label: Text('Home')),
+                  NavigationRailDestination(icon: Icon(Icons.search), label: Text('Search')),
+                  NavigationRailDestination(icon: Icon(Icons.settings), label: Text('Settings')),
+                ],
+              ),
+            
+            // Your main Sliver content goes here
+            Expanded(
+              child: PageTransitionSwitcher(
+                child: screens[selectedIndex]
+              )
             ),
-          ),
+          ],
         ),
       ),
     );
   }
-}
-
-Widget remindersWidget(AsyncValue<List<Reminder>> reminders) {
-  return reminders.when(
-    loading: () => const CircularProgressIndicator(),
-    error: (e, _) => Text('Error: $e'),
-    data: (list) => Column(
-      children: list.map((r) {
-        return ListTile(title: Text(r.title), subtitle: Text(r.type));
-      }).toList(),
-    ),
-  );
 }

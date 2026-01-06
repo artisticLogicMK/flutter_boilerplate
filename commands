@@ -2,3 +2,5 @@ flutter pub run build_runner build
 flutter pub run build_runner watch
 
 flutter gen-l10n
+
+flutter build apk --release --target-platform android-arm64

@@ -56,6 +56,7 @@ ThemeData lightTheme = ThemeData(
     lightNeutralPalette,
   ],
   colorScheme: lightColorScheme,
+  fontFamily: 'Poppins',
   // other theme config...
 );
 
@@ -66,5 +67,6 @@ ThemeData darkTheme = ThemeData(
     darkNeutralPalette,
   ],
   colorScheme: darkColorScheme,
+  fontFamily: 'Poppins',
   // other theme config...
 );

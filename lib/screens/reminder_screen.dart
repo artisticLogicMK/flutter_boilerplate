@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:secondbrain/theme/app_text.dart';
 import 'package:secondbrain/theme/theme_extensions.dart';
 
-class Sliver extends StatelessWidget {
-  const Sliver({super.key});
+class ReminderScreen extends StatelessWidget {
+  const ReminderScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
+    return SafeArea(
         child: CustomScrollView(
           slivers: [
             // 1. Logo and Countdown (Disappears first)
             SliverAppBar(
               automaticallyImplyLeading: false,
+              backgroundColor: context.neutrals.neutral100,
+              surfaceTintColor: context.neutrals.neutral100,
               expandedHeight: 120.0,
               flexibleSpace: FlexibleSpaceBar(
                 background: Column(
@@ -28,10 +30,13 @@ class Sliver extends StatelessWidget {
                 ),
               ),
             ),
-
+        
+        
             // 2. Search Input (Floating: uncollapses on scroll up)
             SliverAppBar(
               automaticallyImplyLeading: false,
+              backgroundColor: context.neutrals.neutral100,
+              surfaceTintColor: context.neutrals.neutral100,
               pinned: false,
               floating: true,
               snap: true,
@@ -40,35 +45,29 @@ class Sliver extends StatelessWidget {
                 // The 'background' property fades out automatically as the bar collapses
                 background: Container(
                   padding: EdgeInsets.all(20),
-                  child: Center(
-                    // Centers the child horizontally
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(
-                        maxWidth: 600,
-                      ), // Max width of 600px
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Search reminders...',
-                          prefixIcon: const Icon(Icons.search),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          filled: true,
-                          fillColor: Colors.white,
-                        ),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Search reminders...',
+                      iconColor: context.neutrals.neutral700,
+                      prefixIcon: Icon(Icons.search),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
                       ),
+                      fillColor: Colors.transparent,
+                      filled: true,
                     ),
                   ),
                 ),
               ),
             ),
-
+        
+        
             // 3. Reminder Title & Buttons (Stays pinned at the top)
             SliverAppBar(
               automaticallyImplyLeading: false,
-              pinned: true,
               backgroundColor: context.neutrals.neutral100,
               surfaceTintColor: context.neutrals.neutral100,
+              pinned: true,
               toolbarHeight: 100.0, // Adjusted for the Column height
               title: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,13 +79,14 @@ class Sliver extends StatelessWidget {
                   Row(
                     children: [
                       TextButton(onPressed: () {}, child: Text("All")),
-                      TextButton(onPressed: () {}, child: Text("Completed")),
+                      TextButton(onPressed: () {}, child: Text("Completed", style: TextStyle(fontSize: context.text.x3l))),
                     ],
                   ),
                 ],
               ),
             ),
-
+        
+        
             // 4. The List of Reminders
             SliverList(
               delegate: SliverChildBuilderDelegate(
@@ -99,7 +99,7 @@ class Sliver extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
+      );
+    
   }
 }
