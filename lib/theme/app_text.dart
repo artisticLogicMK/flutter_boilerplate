@@ -16,8 +16,14 @@ class AppTextSize {
   double get base => 16;
   double get lg => 18;
   double get xl => 20;
-  double get x2l => 24;
-  double get x3l => 30;
+  double get xl2 => 24;
+  double get xl3 => 30;
+  double get xl4 => 36;
+  double get xl5 => 48;
+  double get xl6 => 60;
+  double get xl7 => 72;
+  double get xl8 => 96;
+  double get xl9 => 128;
 }
 
 /// ===============================

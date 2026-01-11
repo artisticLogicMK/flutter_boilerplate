@@ -4,13 +4,13 @@ import 'app_colors.dart';
 
 ColorScheme lightColorScheme = const ColorScheme(
   brightness: Brightness.light,
-  primary: AppColors.neutral900,
+  primary: AppColors.neutral800,
   onPrimary: AppColors.neutral200,
 
-  secondary: AppColors.neutral900,
+  secondary: AppColors.neutral800,
   onSecondary: AppColors.neutral200,
 
-  surface: AppColors.neutral100,
+  surface: AppColors.neutral300,
   onSurface: AppColors.neutral900,
 
   error: AppColors.error,
@@ -19,13 +19,13 @@ ColorScheme lightColorScheme = const ColorScheme(
 
 ColorScheme darkColorScheme = const ColorScheme(
   brightness: Brightness.dark,
-  primary: AppColors.neutral200,
-  onPrimary: AppColors.neutral900,
+  primary: AppColors.darkNeutral800,
+  onPrimary: AppColors.darkNeutral200,
 
-  secondary: AppColors.neutral200,
-  onSecondary: AppColors.neutral900,
+  secondary: AppColors.darkNeutral800,
+  onSecondary: AppColors.darkNeutral200,
 
-  surface: AppColors.darkNeutral100,
+  surface: AppColors.darkNeutral300,
   onSurface: AppColors.darkNeutral900,
 
   error: AppColors.error,

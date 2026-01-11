@@ -67,8 +67,8 @@ class Sliver extends StatelessWidget {
             SliverAppBar(
               automaticallyImplyLeading: false,
               pinned: true,
-              backgroundColor: context.neutrals.neutral100,
-              surfaceTintColor: context.neutrals.neutral100,
+              backgroundColor: context.nt.neutral100,
+              surfaceTintColor: context.nt.neutral100,
               toolbarHeight: 100.0, // Adjusted for the Column height
               title: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,7 +79,7 @@ class Sliver extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      TextButton(onPressed: () {}, child: Text("All")),
+                      FilledButton(onPressed: () {}, child: Text("All")),
                       TextButton(onPressed: () {}, child: Text("Completed")),
                     ],
                   ),

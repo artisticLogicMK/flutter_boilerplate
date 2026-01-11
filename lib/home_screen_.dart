@@ -10,8 +10,8 @@ import 'package:secondbrain/sliver.dart';
 import 'theme/theme_extensions.dart';
 import 'theme_playground.dart';
 
-class HomeScreen extends ConsumerWidget {
-  const HomeScreen({super.key});
+class Boiler extends ConsumerWidget {
+  const Boiler({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,7 +25,7 @@ class HomeScreen extends ConsumerWidget {
     ref.read(permissionServiceProvider);
 
     return Scaffold(
-      backgroundColor: context.neutrals.neutral200,
+      backgroundColor: context.nt.neutral200,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -60,7 +60,7 @@ class HomeScreen extends ConsumerWidget {
                         Text(
                           'Theming',
                           style: TextStyle(
-                            color: context.neutrals.neutral600,
+                            color: context.nt.neutral600,
                             fontSize: 20,
                             fontWeight: FontWeight.w600,
                           ),
@@ -81,7 +81,7 @@ class HomeScreen extends ConsumerWidget {
 
                         // Locale
                         Text('Locale', style: TextStyle(
-                            color: context.neutrals.neutral600,
+                            color: context.nt.neutral600,
                             fontSize: 20,
                             fontWeight: FontWeight.w600,
                           ),

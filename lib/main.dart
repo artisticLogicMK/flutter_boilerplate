@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -17,6 +18,16 @@ void main() async {
   // Pre-load the config before building any UI
   final container = ProviderContainer();
   await container.read(appConfigProvider.future);
+
+  // Enable edge-to-edge display on Android 10+
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge); 
+
+  // Set system navigation bar color to transparent
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    systemNavigationBarColor: Colors.transparent, 
+    // Adjust status bar brightness as needed for visibility
+    statusBarIconBrightness: Brightness.dark, 
+  ));
 
   runApp(
     UncontrolledProviderScope(

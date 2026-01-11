@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:secondbrain/theme/app_colors.dart';
 import 'package:secondbrain/theme/theme_extensions.dart';
 
 class AppButton extends StatelessWidget {
@@ -20,7 +19,7 @@ class AppButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: background ?? context.neutrals.neutral900,
+        backgroundColor: background ?? context.nt.neutral900,
         foregroundColor: foreground ?? Colors.white,
         padding: const EdgeInsets.symmetric(
             vertical: 12, horizontal: 20),
